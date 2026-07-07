@@ -1,0 +1,16 @@
+---
+const metrics = [
+  { value: '7', label: 'Evidence classes' },
+  { value: '4', label: 'Active categories' },
+  { value: '0', label: 'Pay-to-rank arrangements' },
+  { value: '100%', label: 'Documented methodology' },
+];
+---
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.5rem;background:var(--color-primary);color:#fff;padding:2rem;border-radius:var(--radius);margin-top:2rem;">
+  {metrics.map(m => (
+    <div style="text-align:center;">
+      <p style="font-size:2.2rem;font-weight:700;color:var(--color-accent);margin:0;font-family:var(--font-heading);">{m.value}</p>
+      <p style="font-size:0.85rem;opacity:0.8;margin:0.25rem 0 0 0;">{m.label}</p>
+    </div>
+  ))}
+</div>

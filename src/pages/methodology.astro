@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ResearchProcess from '../components/ResearchProcess.astro';
+import EvidenceClassifier from '../components/EvidenceClassifier.astro';
+---
+
+<BaseLayout title="Methodology" description="The Whitfield Research Partners methodology: evidence classes, criteria design, and claim classification.">
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem;max-width:820px;">
+    <h1>Research Methodology</h1>
+    <p style="color:var(--color-muted);margin-top:0.75rem;line-height:1.7;">
+      Our methodology is designed to produce inspectable research. Criteria are fixed before conclusions are drawn, evidence is classified consistently, and every report discloses its limitations.
+    </p>
+
+    <h2 style="margin-top:3rem;">Four-Stage Research Process</h2>
+    <ResearchProcess />
+
+    <h2 style="margin-top:3rem;">Coverage Gating Tests</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      We only launch coverage in a category when it passes four tests:
+    </p>
+    <ul style="margin-top:1rem;padding-left:1.5rem;line-height:1.9;color:var(--color-text);">
+      <li><strong>Evidence asymmetry:</strong> claims differ enough from observable reality that independent research adds value.</li>
+      <li><strong>Accessible public sources:</strong> we can verify material claims without privileged access.</li>
+      <li><strong>Bounded, answerable question:</strong> the research question can be answered within a defined scope.</li>
+      <li><strong>Feasible evaluation framework:</strong> we can design criteria that are specific, measurable, and replicable.</li>
+    </ul>
+
+    <h2 style="margin-top:3rem;">Seven Evidence Classes</h2>
+    <div style="display:grid;gap:1rem;margin-top:1.5rem;">
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">1. Direct Documentation</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">Pricing pages, API docs, contracts, white papers, and other first-party materials.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">2. Independent Reviews</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">Third-party audits, customer testimonials with named sources, and verified case studies.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">3. Market Signals</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">Search demand, job postings, practitioner discussion, and conference activity.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">4. Regulatory & Legal Records</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">SEC filings, court records, patent databases, and government enforcement actions.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">5. Expert Interviews</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">On-the-record conversations with practitioners, operators, and academics.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">6. Quantitative Data</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">Datasets, benchmarks, and reproducible analyses from credible sources.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">7. Editorial Analysis</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">Synthesized interpretation, clearly labeled as such and bounded by evidence.</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top:3rem;">Claim Classification</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      Every material claim in our reports is labeled using one of three tags:
+    </p>
+    <EvidenceClassifier />
+
+    <h2 style="margin-top:3rem;">Eight Standard Criteria Dimensions</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      For category benchmarks, we evaluate providers across eight dimensions. Weights are set before any provider is named.
+    </p>
+    <ol style="margin-top:1rem;padding-left:1.5rem;line-height:1.9;">
+      <li><strong>Category fit</strong> — does the offering match the category definition?</li>
+      <li><strong>Scope clarity</strong> — are boundaries and exclusions explicit?</li>
+      <li><strong>Proof quality</strong> — how strong is the supporting evidence?</li>
+      <li><strong>Pricing transparency</strong> — are prices public and comparable?</li>
+      <li><strong>Implementation model</strong> — is the delivery model documented?</li>
+      <li><strong>Support & accountability</strong> — what support, SLA, and escalation paths exist?</li>
+      <li><strong>Trust signals</strong> — what independent validation is available?</li>
+      <li><strong>Risk factors</strong> — what could invalidate the conclusion?</li>
+    </ol>
+
+    <h2 style="margin-top:3rem;">Update Cadence</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      Live reports are reviewed quarterly or when material new evidence emerges. Reports are date-stamped for publication and last review. Readers may request updates via <a href="/submit-evidence">Submit Evidence</a>.
+    </p>
+  </div>
+</BaseLayout>

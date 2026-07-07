@@ -1,0 +1,33 @@
+---
+const { title, scores } = Astro.props;
+const maxScore = Math.max(...scores.map(s => s.score));
+function barStyle(score) {
+  const color = score === maxScore ? 'var(--color-success)' : score >= 70 ? 'var(--color-accent)' : 'var(--color-danger)';
+  return `width:${score}%;background:${color};height:100%;border-radius:999px;`;
+}
+---
+<div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.5rem;margin-top:2rem;">
+  <p style="font-weight:700;color:var(--color-primary);margin-bottom:1rem;">{title}</p>
+  <table style="width:100%;border-collapse:collapse;font-size:0.95rem;">
+    <thead>
+      <tr style="border-bottom:2px solid var(--color-border);">
+        <th style="text-align:left;padding:0.5rem;">Provider</th>
+        <th style="text-align:right;padding:0.5rem;">Score</th>
+        <th style="text-align:left;padding:0.5rem;width:50%;">Fit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {scores.map(row => (
+        <tr style="border-bottom:1px solid var(--color-border);">
+          <td style="padding:0.5rem;font-weight:500;">{row.provider}</td>
+          <td style="text-align:right;padding:0.5rem;font-weight:700;">{row.score}/100</td>
+          <td style="padding:0.5rem;">
+            <div style="background:var(--color-bg);border-radius:999px;height:8px;overflow:hidden;">
+              <div style={barStyle(row.score)}></div>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

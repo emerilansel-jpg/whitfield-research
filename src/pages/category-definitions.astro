@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CoverageTable from '../components/CoverageTable.astro';
+---
+
+<BaseLayout title="Category Definitions" description="Research taxonomy, category scope, and output formats at Whitfield Research Partners.">
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem;max-width:900px;">
+    <h1>Category Definitions</h1>
+    <p style="color:var(--color-muted);margin-top:0.75rem;line-height:1.7;max-width:700px;">
+      Our taxonomy defines which categories we cover, the research question each category addresses, the expected output format, and the current coverage status.
+    </p>
+
+    <CoverageTable />
+
+    <h2 style="margin-top:3rem;">Output Formats</h2>
+    <div style="display:grid;gap:1rem;margin-top:1.5rem;">
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">Category Benchmark</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">A scored comparison of providers against fixed criteria, with proof gaps and limitations disclosed.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">Market Report</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">An evidence-based analysis of market structure, demand signals, and key dynamics.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">Comparative Analysis</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">A focused comparison of two or more approaches, products, or frameworks.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">Research Primer</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">An introductory guide to a category, its terminology, and the evidence landscape.</p>
+      </div>
+      <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;">
+        <h3 style="font-size:1.05rem;">Category Definition</h3>
+        <p style="color:var(--color-muted);font-size:0.95rem;margin:0.4rem 0 0;line-height:1.6;">A boundary-setting document that defines what is in and out of scope for a category.</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top:3rem;">Scope Boundaries</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      We do not cover categories where public evidence is unavailable, where questions are too broad to answer within a bounded framework, or where our team lacks sufficient methodological distance. Category status is reviewed quarterly.
+    </p>
+  </div>
+</BaseLayout>

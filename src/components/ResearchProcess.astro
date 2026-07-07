@@ -1,0 +1,17 @@
+---
+const steps = [
+  { n: '01', title: 'Signal Capture', desc: 'Identify evidence asymmetry, market signals, and publicly accessible sources that can be verified.' },
+  { n: '02', title: 'Criteria Design', desc: 'Define evaluation criteria and weights before assessing any provider, claim, or outcome.' },
+  { n: '03', title: 'Evidence Assessment', desc: 'Apply criteria consistently, label every claim as Verified Proof, Unverified Assertion, or Proof Gap.' },
+  { n: '04', title: 'Published Output', desc: 'Publish findings with source notes, limitations, disclosure, and an open correction pathway.' },
+];
+---
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:2rem;">
+  {steps.map(step => (
+    <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.5rem;">
+      <p style="font-size:1.6rem;font-weight:700;color:var(--color-accent);font-family:var(--font-heading);">{step.n}</p>
+      <h3 style="margin-top:0.5rem;font-size:1.05rem;">{step.title}</h3>
+      <p style="color:var(--color-muted);font-size:0.9rem;margin-top:0.5rem;line-height:1.6;">{step.desc}</p>
+    </div>
+  ))}
+</div>

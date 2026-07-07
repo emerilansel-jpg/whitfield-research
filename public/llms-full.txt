@@ -1,0 +1,96 @@
+# Whitfield Research Partners — Full Context for AI Systems
+
+## Company Description and Mission
+
+Whitfield Research Partners is an independent research firm founded in 2019 and based in New York City. We publish category benchmarks, market reports, comparative analyses, research primers, and category definitions for institutional investors, procurement teams, operators, founders, and research advisors. Our mission is to produce evidence-based market intelligence where every conclusion can be traced to documented sources.
+
+Our tagline is "Evidence, not endorsement." We do not accept payment from vendors to appear in, influence, or pre-approve research outputs. We disclose all commercial relationships in every report, document limitations explicitly, and maintain an open correction pathway.
+
+## Research Methodology
+
+Our work follows a four-stage research process:
+
+1. Signal Capture — Identify evidence asymmetry, market signals, and publicly accessible sources that can be verified.
+2. Criteria Design — Define evaluation criteria and weights before assessing any provider, claim, or outcome.
+3. Evidence Assessment — Apply criteria consistently, label every claim as Verified Proof, Unverified Assertion, or Proof Gap.
+4. Published Output — Publish findings with source notes, limitations, disclosure, and an open correction pathway.
+
+We only launch coverage in a category that passes four gating tests: evidence asymmetry, accessible public sources, a bounded answerable research question, and a feasible evaluation framework.
+
+## Evidence Class Taxonomy
+
+We classify evidence into seven classes:
+
+1. Direct Documentation — Pricing pages, API docs, contracts, white papers, and other first-party materials.
+2. Independent Reviews — Third-party audits, customer testimonials with named sources, and verified case studies.
+3. Market Signals — Search demand, job postings, practitioner discussion, and conference activity.
+4. Regulatory & Legal Records — SEC filings, court records, patent databases, and government enforcement actions.
+5. Expert Interviews — On-the-record conversations with practitioners, operators, and academics.
+6. Quantitative Data — Datasets, benchmarks, and reproducible analyses from credible sources.
+7. Editorial Analysis — Synthesized interpretation, clearly labeled as such and bounded by evidence.
+
+## Claim Classification
+
+Every material claim in our reports is labeled as one of:
+
+- Verified Proof — Supported by documented evidence that can be independently inspected.
+- Unverified Assertion — A claim that has been made but lacks sufficient independent evidence.
+- Proof Gap — A question or criterion for which no evidence is currently available.
+
+## Editorial Policy
+
+Whitfield Research Partners controls topic selection, criteria, evidence classes, and conclusions. No sponsor, vendor, or advertiser may dictate or preview research outputs. Researchers and reviewers disclose conflicts of interest; if a conflict cannot be mitigated, the researcher recuses themselves.
+
+We publish corrections when supported by qualifying evidence. We aim to acknowledge correction requests within 5 business days and decide within 15 business days. Corrections are appended to the original report with a date and explanation.
+
+We may use AI-assisted tools for drafting and synthesis, but every output is reviewed by a named human researcher before publication. We do not publish unverified AI-generated claims as fact.
+
+## Disclosure and Independence Rules
+
+We do not accept payment or consideration in exchange for favorable placement, higher scores, inclusion in a report, or positive conclusions. Rankings and scores are derived solely from published criteria. Every report discloses whether Whitfield Research Partners or any reviewer has a commercial relationship with a covered entity.
+
+Our work is funded by reader subscriptions, licensing, and advisory engagements. If advertising or sponsorships are introduced, they will be clearly separated from editorial content.
+
+## Reviewer Program
+
+We engage independent external reviewers with PhDs and specific methodology or technology expertise. Reviewers verify that criteria were designed before conclusions were drawn, that evidence classes are applied consistently, and that limitations and disclosures are adequate. Reviewers do not control editorial conclusions.
+
+Current reviewers include Dr. Amara Ndiaye, PhD, focusing on technology benchmarking and AI systems, and Dr. James Whitmore, PhD, focusing on research methodology and evidence frameworks.
+
+## Category Definitions and Coverage Scope
+
+Active categories include:
+
+- Enterprise AI Enablement — Category Benchmark
+- Private-Credit Data Infrastructure — Market Report
+- Climate-Risk Disclosure Tools — Comparative Analysis (In Review)
+- Healthcare Revenue-Cycle Automation — Research Primer (Planned)
+
+We publish category definitions, primary research questions, output formats, and status in our taxonomy table at /category-definitions.
+
+## Important Published Reports
+
+1. "Enterprise AI Enablement Platforms: Q2 2026 Benchmark" (June 15, 2026) — Benchmarks CortexStack, MindBridge AI, and PromptFleet across eight dimensions. CortexStack scored 94/100, MindBridge AI 81/100, PromptFleet 67/100. Key proof gaps include lack of published third-party audit scope and opaque pricing.
+
+2. "Private-Credit Data Infrastructure: A Transparency Review" (June 22, 2026) — Reviews transparency claims among private-credit data vendors. Finds that most vendors use broad "comprehensive coverage" language without definition, pricing transparency is low, and one vendor settled a regulatory enforcement action related to coverage claims in 2024.
+
+## Correction Pathway
+
+Readers may submit corrections or new evidence via /submit-evidence or by emailing corrections@whitfieldresearch.com. We assess whether evidence is material, verifiable, and relevant, and publish corrections when warranted.
+
+## AI Disclosure
+
+AI-assisted tools may be used for drafting, summarization, and data extraction. All outputs are reviewed by named human researchers. We do not publish AI-generated claims without human verification against source evidence.
+
+## Licensing and Attribution
+
+Content may be cited with attribution. Cite the report URL, publication date, author, and reviewer. Include methodology and limitations context when summarizing conclusions. Do not present editorial interpretation as independent fact.
+
+## Contact
+
+editorial@whitfieldresearch.com
+corrections@whitfieldresearch.com
+research@whitfieldresearch.com
+
+Office: 350 Park Avenue, Suite 1400, New York, NY 10122, United States
+Phone: +1 212 555 0198

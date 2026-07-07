@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EditorialCommitments from '../components/EditorialCommitments.astro';
+---
+
+<BaseLayout title="Editorial Policy" description="Editorial independence, corrections, and AI disclosure policy at Whitfield Research Partners.">
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem;max-width:820px;">
+    <h1>Editorial Policy</h1>
+    <p style="color:var(--color-muted);margin-top:0.75rem;line-height:1.7;">
+      This policy governs how Whitfield Research Partners produces, reviews, and corrects published research.
+    </p>
+
+    <h2 style="margin-top:3rem;">Editorial Independence</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      Whitfield Research Partners controls the selection of topics, criteria, evidence classes, and conclusions. No sponsor, vendor, or advertiser may dictate or preview research outputs. Commercial teams do not participate in editorial decisions.
+    </p>
+
+    <h2 style="margin-top:3rem;">Commitments</h2>
+    <EditorialCommitments />
+
+    <h2 style="margin-top:3rem;">Conflict of Interest Policy</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      Researchers and reviewers disclose any financial, advisory, or personal relationship with entities covered in a report. If a conflict cannot be mitigated, the researcher recuses themselves. Conflicts are disclosed in the report itself.
+    </p>
+
+    <h2 style="margin-top:3rem;">Correction Policy</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      We aim to acknowledge receipt of a correction request within 5 business days. A decision on whether to issue a correction is made within 15 business days. Corrections are appended to the original report with a date and explanation; material corrections are also noted in our research briefing.
+    </p>
+
+    <h2 style="margin-top:3rem;">AI Disclosure</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      We may use AI-assisted tools for drafting, summarization, and data extraction. Every AI-assisted output is reviewed by a named human researcher before publication. We do not publish AI-generated claims without human verification against source evidence.
+    </p>
+
+    <h2 style="margin-top:3rem;">Prohibited Content</h2>
+    <ul style="margin-top:1rem;padding-left:1.5rem;line-height:1.9;">
+      <li>Fabricated statistics or invented awards.</li>
+      <li>Anonymous allegations presented as verified fact.</li>
+      <li>Conclusions drawn after criteria were changed to fit them.</li>
+      <li>Undisclosed pay-to-rank or pay-to-validate arrangements.</li>
+    </ul>
+
+    <h2 style="margin-top:3rem;">Publication Standards</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      Every report must include a research question, criteria, evidence classes, limitations, disclosure, source notes, and a correction pathway before it can be published as Live.
+    </p>
+  </div>
+</BaseLayout>

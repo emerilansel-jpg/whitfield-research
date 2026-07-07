@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ResearchProcess from '../components/ResearchProcess.astro';
+---
+
+<BaseLayout title="About Us" description="About Whitfield Research Partners — independent research built on evidence, not endorsement.">
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem;max-width:800px;">
+    <h1>About Whitfield Research Partners</h1>
+
+    <p style="font-size:1.15rem;line-height:1.85;margin-top:1.5rem;">
+      Founded in 2019, Whitfield Research Partners is an independent research firm based in New York City. We produce category benchmarks, market reports, and methodology primers for institutional investors, procurement leaders, and operators who need evidence they can inspect.
+    </p>
+
+    <p style="line-height:1.8;margin-top:1.25rem;">
+      Our name reflects a simple principle: the field of evidence matters more than the opinion of the researcher. Every report begins with a bounded research question, fixed criteria, and a transparent disclosure of what we can and cannot verify.
+    </p>
+
+    <h2 style="margin-top:3rem;">What We Cover</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      We focus on categories where evidence asymmetry is high: enterprise software, private-credit data infrastructure, climate-risk disclosure tools, and healthcare revenue-cycle automation. We do not cover every market. We cover markets where public evidence can answer a specific question.
+    </p>
+
+    <h2 style="margin-top:3rem;">Our Methodology</h2>
+    <ResearchProcess />
+
+    <h2 style="margin-top:3rem;">Independence Model</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      Whitfield Research Partners does not accept payment from vendors to appear in, influence, or pre-approve research outputs. Subscription revenue funds our work. Advertisements, if ever introduced, will be ring-fenced from editorial decisions and clearly labeled.
+    </p>
+
+    <h2 style="margin-top:3rem;">Office</h2>
+    <p style="line-height:1.8;margin-top:1rem;">
+      350 Park Avenue, Suite 1400<br/>
+      New York, NY 10122<br/>
+      United States
+    </p>
+  </div>
+</BaseLayout>

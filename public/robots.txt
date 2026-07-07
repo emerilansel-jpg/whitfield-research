@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://whitfieldresearch.com/sitemap-index.xml
+LLMs-Context: https://whitfieldresearch.com/llms.txt

@@ -1,0 +1,32 @@
+---
+const categories = [
+  { name: 'Enterprise AI Enablement', question: 'Which AI enablement platforms provide verifiable implementation proof?', format: 'Category Benchmark', status: 'Live' },
+  { name: 'Private-Credit Data Infrastructure', question: 'How transparent are pricing, sourcing, and coverage claims among data vendors?', format: 'Market Report', status: 'Live' },
+  { name: 'Climate-Risk Disclosure Tools', question: 'Which climate disclosure platforms disclose methodology and uncertainty bounds?', format: 'Comparative Analysis', status: 'In Review' },
+  { name: 'Healthcare Revenue-Cycle Automation', question: 'What evidence supports ROI claims in revenue-cycle automation?', format: 'Research Primer', status: 'Planned' },
+];
+---
+<div style="overflow-x:auto;margin-top:1.5rem;">
+  <table style="width:100%;border-collapse:collapse;font-size:0.95rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);">
+    <thead>
+      <tr style="background:var(--color-primary);color:#fff;text-align:left;">
+        <th style="padding:0.85rem 1rem;font-weight:600;">Category</th>
+        <th style="padding:0.85rem 1rem;font-weight:600;">Primary Research Question</th>
+        <th style="padding:0.85rem 1rem;font-weight:600;">Output Format</th>
+        <th style="padding:0.85rem 1rem;font-weight:600;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {categories.map(cat => (
+        <tr style="border-bottom:1px solid var(--color-border);">
+          <td style="padding:0.85rem 1rem;font-weight:600;color:var(--color-primary);">{cat.name}</td>
+          <td style="padding:0.85rem 1rem;color:var(--color-muted);">{cat.question}</td>
+          <td style="padding:0.85rem 1rem;">{cat.format}</td>
+          <td style="padding:0.85rem 1rem;">
+            <span style={`font-size:0.75rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:999px;${cat.status === 'Live' ? 'background:#DCFCE7;color:#166534;' : cat.status === 'In Review' ? 'background:#FEF3C7;color:#92400E;' : 'background:#E2E8F0;color:#475569;'}`}>{cat.status}</span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

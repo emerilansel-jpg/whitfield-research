@@ -1,0 +1,14 @@
+---
+const { active = 'All' } = Astro.props;
+const tabs = ['All', 'Benchmarks', 'Market Reports', 'Primers', 'Frameworks'];
+---
+<div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem;">
+  {tabs.map(tab => (
+    <a
+      href={`/insights?filter=${tab.toLowerCase().replace(/ /g, '-')}`}
+      style={`padding:0.5rem 1rem;border-radius:999px;font-size:0.85rem;font-weight:600;text-decoration:none;border:1px solid var(--color-border);${tab === active ? 'background:var(--color-primary);color:#fff;' : 'background:var(--color-surface);color:var(--color-text);'}`}
+    >
+      {tab}
+    </a>
+  ))}
+</div>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Submit Evidence" description="Submit corrections, new evidence, or disputes to Whitfield Research Partners.">
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem;max-width:720px;">
+    <h1>Submit Evidence</h1>
+    <p style="color:var(--color-muted);margin-top:0.75rem;line-height:1.7;">
+      We publish corrections when supported by qualifying evidence. Please include the report URL, the specific claim, and the opposing evidence. Anonymous submissions are accepted, but contact details help us verify context.
+    </p>
+
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:2.5rem;display:grid;gap:1.25rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:2rem;">
+      <div>
+        <label for="report_url" style="display:block;font-weight:600;margin-bottom:0.35rem;">Report URL</label>
+        <input type="url" id="report_url" name="report_url" required placeholder="https://whitfieldresearch.com/research/..." style="width:100%;padding:0.75rem 1rem;border:1px solid var(--color-border);border-radius:var(--radius);font-family:var(--font-body);" />
+      </div>
+      <div>
+        <label for="claim" style="display:block;font-weight:600;margin-bottom:0.35rem;">Claim Being Disputed</label>
+        <textarea id="claim" name="claim" required rows="4" placeholder="Quote or summarize the claim as it appears in the report." style="width:100%;padding:0.75rem 1rem;border:1px solid var(--color-border);border-radius:var(--radius);font-family:var(--font-body);"></textarea>
+      </div>
+      <div>
+        <label for="evidence" style="display:block;font-weight:600;margin-bottom:0.35rem;">Opposing Evidence</label>
+        <textarea id="evidence" name="evidence" required rows="6" placeholder="Describe the evidence. Include URLs, document names, dates, and how the evidence can be verified." style="width:100%;padding:0.75rem 1rem;border:1px solid var(--color-border);border-radius:var(--radius);font-family:var(--font-body);"></textarea>
+      </div>
+      <div>
+        <label for="email" style="display:block;font-weight:600;margin-bottom:0.35rem;">Your Email (optional)</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" style="width:100%;padding:0.75rem 1rem;border:1px solid var(--color-border);border-radius:var(--radius);font-family:var(--font-body);" />
+      </div>
+      <div>
+        <button type="submit" class="btn">Submit Evidence</button>
+      </div>
+      <p style="font-size:0.85rem;color:var(--color-muted);margin:0;">
+        Alternatively, email <a href="mailto:corrections@whitfieldresearch.com">corrections@whitfieldresearch.com</a>.
+      </p>
+    </form>
+
+    <h2 style="margin-top:3rem;">What Happens Next</h2>
+    <ol style="margin-top:1rem;padding-left:1.5rem;line-height:1.9;">
+      <li>We acknowledge receipt within 5 business days.</li>
+      <li>We assess whether the evidence is material, verifiable, and relevant.</li>
+      <li>We decide within 15 business days whether to issue a correction, clarification, or rebuttal.</li>
+      <li>Published corrections are appended to the original report with a date and explanation.</li>
+    </ol>
+  </div>
+</BaseLayout>

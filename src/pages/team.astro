@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const team = [
+  {
+    name: 'Dr. Helena Voss',
+    title: 'Founder & Managing Director',
+    bio: 'Former principal investigator at the Urban Institute and research director at a policy advisory firm. Helena built Whitfield around one rule: every conclusion must be traceable to evidence.',
+    initials: 'HV',
+    color: '#334155',
+  },
+  {
+    name: 'David Okonkwo',
+    title: 'Director of Research',
+    bio: 'David previously led commercial due diligence at a global strategy consultancy. He oversees category selection, criteria design, and reviewer coordination at Whitfield.',
+    initials: 'DO',
+    color: '#C9A227',
+  },
+  {
+    name: 'Sarah Brennan',
+    title: 'Senior Research Fellow',
+    bio: 'Sarah specializes in quantitative evidence synthesis and public-source verification. Her background is in economics and data journalism.',
+    initials: 'SB',
+    color: '#1F2937',
+  },
+];
+
+const reviewers = [
+  {
+    name: 'Dr. Amara Ndiaye, PhD',
+    focus: 'Technology benchmarking & AI systems',
+    credentials: 'Former postdoctoral researcher at Carnegie Mellon; publishes on software capability evaluation and reproducibility in machine learning benchmarks.',
+  },
+  {
+    name: 'Dr. James Whitmore, PhD',
+    focus: 'Research methodology & evidence frameworks',
+    credentials: 'Methodologist and former senior analyst at a leading economic research institute; reviews criteria design and proof-framework validity.',
+  },
+];
+---
+
+<BaseLayout title="Our Team" description="The researchers and independent reviewers behind Whitfield Research Partners.">
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem;">
+    <h1>Our Team</h1>
+    <p style="color:var(--color-muted);margin-top:0.75rem;max-width:600px;line-height:1.7;">
+      Independent researchers with experience in policy research, due diligence, and quantitative analysis. Our reviewers operate independently of editorial conclusions.
+    </p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2.5rem;margin-top:3rem;">
+      {team.map(member => (
+        <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden;">
+          <div style={`width:100%;height:240px;display:flex;align-items:center;justify-content:center;color:#fff;background:${member.color};font-family:var(--font-heading);font-size:4rem;font-weight:700;`} aria-label={`${member.name} initials`}>
+            {member.initials}
+          </div>
+          <div style="padding:1.5rem;">
+            <h3 style="font-size:1.15rem;">{member.name}</h3>
+            <p style="color:var(--color-accent);font-size:0.9rem;font-weight:600;margin-top:0.25rem;">{member.title}</p>
+            <p style="color:var(--color-muted);font-size:0.9rem;margin-top:0.75rem;line-height:1.6;">{member.bio}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div style="margin-top:5rem;">
+      <h2>Independent Reviewers</h2>
+      <p style="color:var(--color-muted);margin-top:0.75rem;max-width:620px;line-height:1.7;">
+        External reviewers verify methodology and evidence quality. They do not control editorial conclusions and disclose any institutional or commercial relationships.
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;margin-top:2rem;">
+        {reviewers.map(reviewer => (
+          <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.5rem;">
+            <h3 style="font-size:1.1rem;">{reviewer.name}</h3>
+            <p style="color:var(--color-accent);font-size:0.85rem;font-weight:600;margin-top:0.25rem;">{reviewer.focus}</p>
+            <p style="color:var(--color-muted);font-size:0.9rem;margin-top:0.75rem;line-height:1.6;">{reviewer.credentials}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

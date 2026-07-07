@@ -1,0 +1,23 @@
+---
+const commitments = [
+  { label: 'Criteria before conclusions', note: 'We set evaluation standards before naming any subject.' },
+  { label: 'Source transparency', note: 'Every material claim is traceable to a documented source.' },
+  { label: 'Conflict disclosure', note: 'Commercial relationships are disclosed in every report.' },
+  { label: 'Open corrections', note: 'We publish corrections when supported by qualifying evidence.' },
+  { label: 'No pay-to-rank', note: 'We do not accept payment to influence rankings or conclusions.' },
+  { label: 'Human editorial review', note: 'Every report is reviewed by named researchers and independent reviewers.' },
+  { label: 'Limitations documented', note: 'We state scope boundaries, evidence gaps, and uncertainty explicitly.' },
+  { label: 'Updated when evidence changes', note: 'Reports are revisited when new evidence alters a conclusion.' },
+];
+---
+<ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1.5rem;list-style:none;">
+  {commitments.map(c => (
+    <li style="display:flex;align-items:flex-start;gap:0.75rem;background:var(--color-surface);border:1px solid var(--color-border);padding:1rem;border-radius:var(--radius);">
+      <span style="color:var(--color-accent);font-weight:700;flex-shrink:0;">✓</span>
+      <div>
+        <span style="font-weight:600;">{c.label}</span>
+        <p style="font-size:0.85rem;color:var(--color-muted);margin:0.2rem 0 0;line-height:1.5;">{c.note}</p>
+      </div>
+    </li>
+  ))}
+</ul>
