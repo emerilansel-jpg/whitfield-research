@@ -76,6 +76,13 @@
     .btn-secondary {
       background: var(--primary);
     }
+    .btn-danger {
+      background: #B91C1C;
+    }
+    .btn-sm {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+    }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .error { color: #B91C1C; margin-top: 0.75rem; font-size: 0.9rem; }
     .success { color: #15803D; margin-top: 0.75rem; font-size: 0.9rem; }
@@ -160,8 +167,24 @@
     }
     .post-list a { color: var(--primary); font-weight: 600; text-decoration: none; }
     .post-list a:hover { text-decoration: underline; }
+    .post-list .actions { display: flex; gap: 0.5rem; align-items: center; }
     .settings-grid { display: grid; gap: 1rem; margin-top: 1rem; }
     .code { font-family: monospace; font-size: 0.85rem; background: var(--bg); padding: 0.5rem; border-radius: var(--radius); word-break: break-all; }
+    .schema-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-top: 1.5rem;
+    }
+    .schema-section h3 { margin: 0 0 0.75rem; color: var(--primary); font-size: 1rem; }
+    .schema-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .settings-section {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .settings-section h3 { margin: 0 0 0.75rem; color: var(--primary); font-size: 1rem; }
     @media (max-width: 768px) {
       .layout { flex-direction: column; }
       .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
@@ -270,6 +293,11 @@
             <p class="hint">Comma-separated list.</p>
           </div>
           <div class="field" style="margin-top:1rem;">
+            <label for="post-tags">Tags</label>
+            <input type="text" id="post-tags" placeholder="ai, enterprise-software, market-analysis" />
+            <p class="hint">Comma-separated list.</p>
+          </div>
+          <div class="field" style="margin-top:1rem;">
             <label for="post-disclosure">Disclosure</label>
             <input type="text" id="post-disclosure" value="No commercial relationship" />
           </div>
@@ -290,6 +318,17 @@
           </div>
           <input type="file" id="body-file-input" accept="image/*" multiple style="display:none;" />
           <div class="thumbs" id="body-thumbs"></div>
+
+          <div class="schema-section">
+            <h3>Schema Markup</h3>
+            <p class="hint">Insert JSON-LD schema templates into the article body at the current cursor position.</p>
+            <div class="schema-buttons">
+              <button class="btn btn-secondary btn-sm" data-schema="faq">FAQ Schema</button>
+              <button class="btn btn-secondary btn-sm" data-schema="howto">HowTo Schema</button>
+              <button class="btn btn-secondary btn-sm" data-schema="review">Review/Rating Schema</button>
+              <button class="btn btn-secondary btn-sm" data-schema="dataset">Dataset Schema</button>
+            </div>
+          </div>
 
           <div class="status-bar">
             <p class="progress" id="publish-progress">Ready to publish.</p>
@@ -337,6 +376,33 @@
           </div>
           <button class="btn btn-secondary" id="gen-hash-btn" style="margin-top:0.5rem;">Generate Hash</button>
           <p id="gen-hash-result" class="code" style="margin-top:0.75rem;display:none;"></p>
+
+          <div class="settings-section">
+            <h3>Change Admin Password</h3>
+            <p class="hint">Update the password used to access this admin panel.</p>
+            <div class="settings-grid" style="margin-top:0.75rem;">
+              <div class="field">
+                <label for="change-current">Current Password</label>
+                <input type="password" id="change-current" placeholder="Current password" />
+              </div>
+              <div class="field">
+                <label for="change-new">New Password</label>
+                <input type="password" id="change-new" placeholder="New password" />
+              </div>
+              <div class="field">
+                <label for="change-confirm">Confirm New Password</label>
+                <input type="password" id="change-confirm" placeholder="Confirm new password" />
+              </div>
+            </div>
+            <button class="btn btn-secondary" id="change-password-btn" style="margin-top:1rem;">Update Password</button>
+            <p id="change-password-msg"></p>
+          </div>
+
+          <div class="settings-section">
+            <h3>Deploy Status</h3>
+            <p class="hint">View GitHub Actions build status for this repository.</p>
+            <a id="actions-link" href="#" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top:0.75rem;text-decoration:none;">View Build Status →</a>
+          </div>
         </div>
       </main>
     </div>
@@ -367,6 +433,7 @@
     const settings = getSettings();
     let mde;
     let uploadedImages = [];
+    let existingPostsCache = [];
 
     function slugify(text) {
       return text.toString().toLowerCase()
@@ -450,6 +517,7 @@
         throw new Error(`GitHub API ${res.status}: ${text}`);
       }
       if (method === 'GET') return res.json();
+      if (method === 'DELETE') return null;
       return res;
     }
 
@@ -488,6 +556,27 @@
       reader.readAsDataURL(file);
     }
 
+    function getSchemaTemplate(type) {
+      const templates = {
+        faq: `<script type="application/ld+json">\n{\n  "@context": "https://schema.org",\n  "@type": "FAQPage",\n  "mainEntity": [\n    {\n      "@type": "Question",\n      "name": "Question text here?",\n      "acceptedAnswer": {\n        "@type": "Answer",\n        "text": "Answer text here."\n      }\n    }\n  ]\n}\n<\/script>`,
+        howto: `<script type="application/ld+json">\n{\n  "@context": "https://schema.org",\n  "@type": "HowTo",\n  "name": "How to accomplish this task",\n  "step": [\n    {\n      "@type": "HowToStep",\n      "name": "Step 1",\n      "text": "Description of step 1."\n    }\n  ]\n}\n<\/script>`,
+        review: `<script type="application/ld+json">\n{\n  "@context": "https://schema.org",\n  "@type": "Review",\n  "itemReviewed": {\n    "@type": "Thing",\n    "name": "Product or service name"\n  },\n  "reviewRating": {\n    "@type": "Rating",\n    "ratingValue": "4.5",\n    "bestRating": "5"\n  },\n  "author": {\n    "@type": "Person",\n    "name": "Reviewer name"\n  }\n}\n<\/script>`,
+        dataset: `<script type="application/ld+json">\n{\n  "@context": "https://schema.org",\n  "@type": "Dataset",\n  "name": "Dataset name",\n  "description": "Brief description of the dataset.",\n  "creator": {\n    "@type": "Organization",\n    "name": "Organization name"\n  }\n}\n<\/script>`,
+      };
+      return templates[type] || '';
+    }
+
+    function insertSchema(type) {
+      if (!mde) return;
+      const template = getSchemaTemplate(type);
+      if (!template) return;
+      const cm = mde.codemirror;
+      const cursor = cm.getCursor();
+      const block = `\n\n\`\`\`json\n${template}\n\`\`\`\n\n`;
+      cm.replaceRange(block, cursor);
+      cm.focus();
+    }
+
     async function publishPost() {
       const settings = getSettings();
       const title = document.getElementById('post-title').value.trim();
@@ -506,6 +595,7 @@
       const description = document.getElementById('post-description').value.trim();
       const researchQuestion = document.getElementById('post-research-question').value.trim();
       const evidenceClasses = document.getElementById('post-evidence-classes').value.split(',').map(s => s.trim()).filter(Boolean);
+      const tags = document.getElementById('post-tags').value.split(',').map(s => s.trim()).filter(Boolean);
       const disclosure = document.getElementById('post-disclosure').value.trim();
       const limitations = document.getElementById('post-limitations').value.trim();
       const featured = document.getElementById('post-featured').value === 'true';
@@ -524,6 +614,7 @@
         outputFormat,
         researchQuestion,
         evidenceClasses,
+        ...(tags.length ? { tags } : {}),
         disclosure,
         limitations,
         featured,
@@ -574,6 +665,7 @@
       try {
         const data = await githubApi('src/content/research');
         const posts = data.filter(item => item.name.endsWith('.md')).sort((a, b) => b.name.localeCompare(a.name));
+        existingPostsCache = posts;
         list.innerHTML = '';
         if (!posts.length) {
           list.innerHTML = '<li>No posts found.</li>';
@@ -582,12 +674,82 @@
         for (const post of posts) {
           const slug = post.name.replace(/\.md$/, '');
           const li = document.createElement('li');
-          li.innerHTML = `<a href="/research/${slug}" target="_blank">${post.name}</a> <span style="color:var(--muted);font-size:0.85rem;">${new Date(post.sha ? Date.now() : 0).toLocaleDateString()}</span>`;
+          li.innerHTML = `
+            <div>
+              <a href="/research/${slug}" target="_blank">${post.name}</a>
+              <span style="color:var(--muted);font-size:0.85rem;display:block;margin-top:0.15rem;">${post.path}</span>
+            </div>
+            <div class="actions">
+              <button class="btn btn-danger btn-sm" data-delete="${post.name}">Delete</button>
+            </div>
+          `;
           list.appendChild(li);
         }
       } catch (err) {
         list.innerHTML = `<li style="color:#B91C1C;">Failed to load posts: ${err.message}</li>`;
       }
+    }
+
+    async function deletePost(name) {
+      if (!confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) return;
+      const post = existingPostsCache.find(p => p.name === name);
+      if (!post || !post.sha) {
+        setProgress('Could not find post SHA.', true);
+        return;
+      }
+      try {
+        await githubApi(`src/content/research/${name}`, 'DELETE', {
+          message: `content: delete ${name}`,
+          sha: post.sha,
+          branch: getSettings().branch,
+        });
+        loadExistingPosts();
+      } catch (err) {
+        alert(`Delete failed: ${err.message}`);
+      }
+    }
+
+    function updateActionsLink() {
+      const repo = document.getElementById('setting-repo').value.trim() || getSettings().repo;
+      const link = document.getElementById('actions-link');
+      link.href = `https://github.com/${repo}/actions`;
+    }
+
+    async function changeAdminPassword() {
+      const current = document.getElementById('change-current').value;
+      const newPw = document.getElementById('change-new').value;
+      const confirmPw = document.getElementById('change-confirm').value;
+      const msg = document.getElementById('change-password-msg');
+      msg.className = '';
+      msg.textContent = '';
+
+      if (!current || !newPw || !confirmPw) {
+        msg.textContent = 'All fields are required.';
+        msg.className = 'error';
+        return;
+      }
+      if (newPw !== confirmPw) {
+        msg.textContent = 'New passwords do not match.';
+        msg.className = 'error';
+        return;
+      }
+
+      const settings = getSettings();
+      const valid = await dcodeIO.bcrypt.compare(current, settings.hash);
+      if (!valid) {
+        msg.textContent = 'Current password is incorrect.';
+        msg.className = 'error';
+        return;
+      }
+
+      const hash = await dcodeIO.bcrypt.hash(newPw, 10);
+      saveSettings({ ...settings, hash });
+      document.getElementById('setting-hash').value = hash;
+      document.getElementById('change-current').value = '';
+      document.getElementById('change-new').value = '';
+      document.getElementById('change-confirm').value = '';
+      msg.textContent = 'Password updated successfully.';
+      msg.className = 'success';
     }
 
     document.getElementById('post-title').addEventListener('input', e => {
@@ -665,6 +827,7 @@
       document.getElementById('setting-repo').value = s.repo;
       document.getElementById('setting-branch').value = s.branch;
       document.getElementById('setting-hash').value = s.hash;
+      updateActionsLink();
     }
 
     document.getElementById('save-settings-btn').addEventListener('click', () => {
@@ -674,6 +837,7 @@
         branch: document.getElementById('setting-branch').value.trim() || 'main',
         hash: document.getElementById('setting-hash').value.trim() || DEFAULT_HASH,
       });
+      updateActionsLink();
       const msg = document.getElementById('settings-msg');
       msg.textContent = 'Settings saved.';
       msg.className = 'success';
@@ -706,6 +870,19 @@
     });
 
     document.getElementById('refresh-posts-btn').addEventListener('click', loadExistingPosts);
+
+    document.getElementById('existing-posts-list').addEventListener('click', e => {
+      if (e.target.matches('[data-delete]')) {
+        deletePost(e.target.dataset.delete);
+      }
+    });
+
+    document.querySelectorAll('[data-schema]').forEach(btn => {
+      btn.addEventListener('click', () => insertSchema(btn.dataset.schema));
+    });
+
+    document.getElementById('change-password-btn').addEventListener('click', changeAdminPassword);
+    document.getElementById('setting-repo').addEventListener('input', updateActionsLink);
 
     document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
   </script>
