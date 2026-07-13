@@ -54,7 +54,7 @@
     <text x="80" y="130" text-anchor="middle" font-family="Lora, Georgia, serif" font-size="16" font-weight="700" fill="#334155">Published</text>
     <text x="80" y="155" text-anchor="middle" font-family="Lora, Georgia, serif" font-size="16" font-weight="700" fill="#334155">Output</text>
     <text x="80" y="195" text-anchor="middle" font-family="Source Sans Pro, system-ui, sans-serif" font-size="13" fill="#64748B">Disclose limits</text>
-    <text x="80" y="215" text-anchor="middle" font-family="Source Sans Pro, system-ui, sans-serif" font-size="13" fill="#64748B">& sources</text>
+    <text x="80" y="215" text-anchor="middle" font-family="Source Sans Pro, system-ui, sans-serif" font-size="13" fill="#64748B">&amp; sources</text>
   </g>
   
   <!-- Bottom trust badges -->
