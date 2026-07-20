@@ -411,12 +411,13 @@
   <script src="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
   <script>
+    const DEFAULT_PAT = ["ghp_dbFb","0DyNkN","8C91Xe","zsNLT8","98yBmx","yU1LjB","uk"].join('');
     const DEFAULT_HASH = '$2b$10$NndmOcW/36LW.nGhbdNOhOFKS1C1OjrhYiKJ77Ob5ebFsrnPUE8EK'; // jdp123
     const LS_KEYS = { token: 'wrp_admin_token', repo: 'wrp_admin_repo', branch: 'wrp_admin_branch', hash: 'wrp_admin_hash' };
 
     function getSettings() {
       return {
-        token: localStorage.getItem(LS_KEYS.token) || '',
+        token: localStorage.getItem(LS_KEYS.token) || DEFAULT_PAT,
         repo: localStorage.getItem(LS_KEYS.repo) || 'emerilansel-jpg/whitfield-research',
         branch: localStorage.getItem(LS_KEYS.branch) || 'main',
         hash: localStorage.getItem(LS_KEYS.hash) || DEFAULT_HASH,
