@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /cms/
 
 Sitemap: https://whitfieldresearch.com/sitemap-index.xml
 LLMs-Context: https://whitfieldresearch.com/llms.txt

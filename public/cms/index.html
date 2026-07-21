@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow">
   <title>Admin | Whitfield Research Partners</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.css" />
@@ -448,6 +449,16 @@
       return name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9._-]/g, '-').toLowerCase();
     }
 
+    function escapeHtml(text) {
+      if (text == null) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     function setProgress(msg, isError) {
       const el = document.getElementById('publish-progress');
       el.textContent = msg;
@@ -677,17 +688,17 @@
           const li = document.createElement('li');
           li.innerHTML = `
             <div>
-              <a href="/research/${slug}" target="_blank">${post.name}</a>
-              <span style="color:var(--muted);font-size:0.85rem;display:block;margin-top:0.15rem;">${post.path}</span>
+              <a href="/research/${escapeHtml(slug)}" target="_blank">${escapeHtml(post.name)}</a>
+              <span style="color:var(--muted);font-size:0.85rem;display:block;margin-top:0.15rem;">${escapeHtml(post.path)}</span>
             </div>
             <div class="actions">
-              <button class="btn btn-danger btn-sm" data-delete="${post.name}">Delete</button>
+              <button class="btn btn-danger btn-sm" data-delete="${escapeHtml(post.name)}">Delete</button>
             </div>
           `;
           list.appendChild(li);
         }
       } catch (err) {
-        list.innerHTML = `<li style="color:#B91C1C;">Failed to load posts: ${err.message}</li>`;
+        list.innerHTML = '<li style="color:#B91C1C;">Failed to load posts: ' + escapeHtml(err.message) + '</li>';
       }
     }
 
