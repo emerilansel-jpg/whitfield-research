@@ -5,8 +5,8 @@
   <p style="opacity:0.8;margin-top:0.5rem;">New reports, methodology notes, and correction updates. No spam. Unsubscribe anytime.</p>
   <form id="newsletter-form" action="#" method="post" style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
     <div class="hp-field" aria-hidden="true">
-      <label for="nl-website">Website</label>
-      <input type="text" id="nl-website" name="website" tabindex="-1" autocomplete="off" />
+      <label for="nl-company">Company</label>
+      <input type="text" id="nl-company" name="company" tabindex="-1" autocomplete="off" />
     </div>
     <input type="email" name="email" placeholder="you@company.com" required style="flex:1;min-width:220px;padding:0.75rem 1rem;border:none;border-radius:var(--radius);font-family:var(--font-body);" />
     <button type="submit" style="background:var(--color-accent);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:var(--radius);font-weight:600;cursor:pointer;font-family:var(--font-body);">Subscribe</button>
@@ -17,16 +17,48 @@
     (function() {
       const form = document.getElementById('newsletter-form');
       if (!form) return;
-      form.addEventListener('submit', function(e) {
+
+      const successEl = document.createElement('p');
+      successEl.className = 'success';
+      successEl.style.cssText = 'margin-top:1rem;color:#15803D;';
+      successEl.textContent = 'Thank you for subscribing.';
+      successEl.style.display = 'none';
+      form.appendChild(successEl);
+
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
-        const honeypot = form.querySelector('input[name="website"]');
+        const honeypot = form.querySelector('input[name="company"]');
         if (honeypot && honeypot.value) {
           return;
         }
         const email = form.querySelector('input[name="email"]').value;
-        const subject = 'Subscribe to Whitfield Research Briefing';
-        const body = 'Please subscribe this email address to the Research Briefing:\n\n' + email + '\n';
-        window.location.href = 'mailto:research@whitfieldresearch.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Subscribing...';
+
+        try {
+          const res = await fetch('https://research-api.n311311.workers.dev/api/form/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              site: 'whitfieldresearch.com',
+              name: 'Newsletter Subscriber',
+              email: email,
+              message: 'Subscribe to Research Briefing',
+              website: '',
+            }),
+          });
+          if (!res.ok) throw new Error('Subscription failed');
+          form.reset();
+          successEl.style.display = 'block';
+          setTimeout(() => { successEl.style.display = 'none'; }, 8000);
+        } catch (err) {
+          alert('Sorry, there was a problem subscribing. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Subscribe';
+        }
       });
     })();
   </script>

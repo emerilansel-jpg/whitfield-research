@@ -42,7 +42,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       (function() {
         const form = document.getElementById('evidence-form');
         if (!form) return;
-        form.addEventListener('submit', function(e) {
+
+        const successEl = document.createElement('p');
+        successEl.className = 'success';
+        successEl.style.cssText = 'margin-top:1rem;';
+        successEl.textContent = 'Thank you. Your submission has been received and will be reviewed.';
+        successEl.style.display = 'none';
+        form.appendChild(successEl);
+
+        form.addEventListener('submit', async function(e) {
           e.preventDefault();
           const honeypot = form.querySelector('input[name="website"]');
           if (honeypot && honeypot.value) {
@@ -52,9 +60,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           const claim = form.querySelector('textarea[name="claim"]').value;
           const evidence = form.querySelector('textarea[name="evidence"]').value;
           const email = form.querySelector('input[name="email"]').value;
-          const body = 'Report URL: ' + reportUrl + '\n\nClaim Being Disputed:\n' + claim + '\n\nOpposing Evidence:\n' + evidence + '\n\nSubmitted by: ' + (email || 'Anonymous') + '\n';
-          const subject = 'Evidence Submission' + (reportUrl ? ' — ' + reportUrl : '');
-          window.location.href = 'mailto:corrections@whitfieldresearch.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+          const message = 'Report URL: ' + reportUrl + '\n\nClaim Being Disputed:\n' + claim + '\n\nOpposing Evidence:\n' + evidence + '\n\nSubmitted by: ' + (email || 'Anonymous') + '\n';
+
+          const submitBtn = form.querySelector('button[type="submit"]');
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+
+          try {
+            const res = await fetch('https://research-api.n311311.workers.dev/api/form/evidence', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                site: 'whitfieldresearch.com',
+                name: 'Evidence Submission',
+                email: email,
+                message: message,
+                website: '',
+              }),
+            });
+            if (!res.ok) throw new Error('Submission failed');
+            form.reset();
+            successEl.style.display = 'block';
+            setTimeout(() => { successEl.style.display = 'none'; }, 8000);
+          } catch (err) {
+            alert('Sorry, there was a problem sending your submission. Please try again or email us directly.');
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Evidence';
+          }
         });
       })();
     </script>

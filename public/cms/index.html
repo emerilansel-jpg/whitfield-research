@@ -201,7 +201,6 @@
       <label for="password">Password</label>
       <input type="password" id="password" placeholder="Enter admin password" />
       <button class="btn" id="login-btn" style="width:100%;margin-top:1.25rem;">Sign In</button>
-      <button class="btn btn-secondary" id="settings-link-btn" style="width:100%;margin-top:0.5rem;background:var(--primary);">Settings</button>
       <p id="login-error" class="error"></p>
     </div>
   </div>
@@ -333,13 +332,13 @@
 
           <div class="status-bar">
             <p class="progress" id="publish-progress">Ready to publish.</p>
-            <button class="btn" id="publish-btn">Publish to GitHub</button>
+            <button class="btn" id="publish-btn">Publish</button>
           </div>
         </div>
 
         <div id="panel-existing-posts" class="panel">
           <h2>Existing Posts</h2>
-          <p class="hint">Posts loaded from the repository via the GitHub API.</p>
+          <p class="hint">Posts loaded from the repository via the backend API.</p>
           <ul class="post-list" id="existing-posts-list"></ul>
           <button class="btn btn-secondary" id="refresh-posts-btn" style="margin-top:1rem;">Refresh List</button>
         </div>
@@ -349,11 +348,6 @@
           <p class="hint">These settings are stored in your browser only.</p>
           <div class="settings-grid">
             <div class="field">
-              <label for="setting-token">GitHub Personal Access Token</label>
-              <input type="password" id="setting-token" placeholder="ghp_..." />
-              <p class="hint">Needs <code>repo</code> scope.</p>
-            </div>
-            <div class="field">
               <label for="setting-repo">Repository</label>
               <input type="text" id="setting-repo" placeholder="emerilansel-jpg/whitfield-research" />
             </div>
@@ -361,43 +355,9 @@
               <label for="setting-branch">Branch</label>
               <input type="text" id="setting-branch" value="main" />
             </div>
-            <div class="field">
-              <label for="setting-hash">Admin Password Bcrypt Hash</label>
-              <input type="text" id="setting-hash" placeholder="$2b$10$..." />
-              <p class="hint">Use 10 rounds. This hash protects the login screen.</p>
-            </div>
           </div>
           <button class="btn" id="save-settings-btn" style="margin-top:1.5rem;">Save Settings</button>
           <p id="settings-msg"></p>
-
-          <h3 style="margin-top:2.5rem;">Generate Password Hash</h3>
-          <p class="hint">Paste a password below to generate a bcrypt hash for the settings field.</p>
-          <div class="field" style="margin-top:1rem;">
-            <input type="text" id="gen-password" placeholder="jdp123" />
-          </div>
-          <button class="btn btn-secondary" id="gen-hash-btn" style="margin-top:0.5rem;">Generate Hash</button>
-          <p id="gen-hash-result" class="code" style="margin-top:0.75rem;display:none;"></p>
-
-          <div class="settings-section">
-            <h3>Change Admin Password</h3>
-            <p class="hint">Update the password used to access this admin panel.</p>
-            <div class="settings-grid" style="margin-top:0.75rem;">
-              <div class="field">
-                <label for="change-current">Current Password</label>
-                <input type="password" id="change-current" placeholder="Current password" />
-              </div>
-              <div class="field">
-                <label for="change-new">New Password</label>
-                <input type="password" id="change-new" placeholder="New password" />
-              </div>
-              <div class="field">
-                <label for="change-confirm">Confirm New Password</label>
-                <input type="password" id="change-confirm" placeholder="Confirm new password" />
-              </div>
-            </div>
-            <button class="btn btn-secondary" id="change-password-btn" style="margin-top:1rem;">Update Password</button>
-            <p id="change-password-msg"></p>
-          </div>
 
           <div class="settings-section">
             <h3>Deploy Status</h3>
@@ -410,29 +370,24 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
   <script>
-    const DEFAULT_PAT = ["ghp_dbFb","0DyNkN","8C91Xe","zsNLT8","98yBmx","yU1LjB","uk"].join('');
-    const DEFAULT_HASH = '$2b$10$NndmOcW/36LW.nGhbdNOhOFKS1C1OjrhYiKJ77Ob5ebFsrnPUE8EK'; // jdp123
-    const LS_KEYS = { token: 'wrp_admin_token', repo: 'wrp_admin_repo', branch: 'wrp_admin_branch', hash: 'wrp_admin_hash' };
+    const API_BASE = 'https://research-api.n311311.workers.dev';
+    const TOKEN_KEY = 'dunstan_admin_token';
+    const LS_KEYS = { repo: 'wrp_admin_repo', branch: 'wrp_admin_branch' };
 
     function getSettings() {
       return {
-        token: localStorage.getItem(LS_KEYS.token) || DEFAULT_PAT,
+        token: sessionStorage.getItem(TOKEN_KEY) || '',
         repo: localStorage.getItem(LS_KEYS.repo) || 'emerilansel-jpg/whitfield-research',
         branch: localStorage.getItem(LS_KEYS.branch) || 'main',
-        hash: localStorage.getItem(LS_KEYS.hash) || DEFAULT_HASH,
       };
     }
 
     function saveSettings(settings) {
-      localStorage.setItem(LS_KEYS.token, settings.token);
       localStorage.setItem(LS_KEYS.repo, settings.repo);
       localStorage.setItem(LS_KEYS.branch, settings.branch);
-      localStorage.setItem(LS_KEYS.hash, settings.hash);
     }
 
-    const settings = getSettings();
     let mde;
     let uploadedImages = [];
     let existingPostsCache = [];
@@ -511,25 +466,28 @@
       });
     }
 
-    async function githubApi(path, method = 'GET', body) {
+    async function cmsApi(endpoint, method = 'GET', body) {
       const { token, repo, branch } = getSettings();
-      if (!token) throw new Error('GitHub token not configured.');
-      const url = `https://api.github.com/repos/${repo}/contents/${path}?ref=${branch}`;
+      const url = new URL(endpoint, API_BASE);
+      if (method === 'GET' && endpoint === '/api/cms/posts') {
+        url.searchParams.set('repo', repo);
+        url.searchParams.set('branch', branch);
+      }
+      const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
       const res = await fetch(url, {
         method,
-        headers: {
-          'Authorization': `token ${token}`,
-          'Accept': 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: body ? JSON.stringify(body) : undefined,
       });
       if (!res.ok) {
         const text = await res.text();
-        throw new Error(`GitHub API ${res.status}: ${text}`);
+        throw new Error(`${res.status}: ${text}`);
       }
       if (method === 'GET') return res.json();
-      if (method === 'DELETE') return null;
       return res;
     }
 
@@ -542,10 +500,12 @@
         const base64 = reader.result.split(',')[1];
         try {
           setProgress(`Uploading ${filename}...`);
-          await githubApi(path, 'PUT', {
-            message: `media: add ${filename} for ${slug}`,
-            content: base64,
+          await cmsApi('/api/cms/upload', 'POST', {
+            repo: getSettings().repo,
             branch: getSettings().branch,
+            path,
+            content: base64,
+            message: `media: add ${filename} for ${slug}`,
           });
           const markdown = `![${filename}](/images/posts/${slug}/${filename})`;
           if (cursor && mde) {
@@ -658,11 +618,13 @@
       const path = `src/content/research/${slug}.md`;
 
       try {
-        setProgress('Publishing to GitHub...');
-        await githubApi(path, 'PUT', {
-          message: `content: publish ${title}`,
-          content,
+        setProgress('Publishing...');
+        await cmsApi('/api/cms/publish', 'POST', {
+          repo: settings.repo,
           branch: settings.branch,
+          path,
+          content,
+          message: `content: publish ${title}`,
         });
         setProgress(`Published successfully! Live in ~90 seconds at /research/${slug}`);
         setTimeout(() => setProgress('Ready to publish.'), 4000);
@@ -675,7 +637,7 @@
       const list = document.getElementById('existing-posts-list');
       list.innerHTML = '<li>Loading...</li>';
       try {
-        const data = await githubApi('src/content/research');
+        const data = await cmsApi('/api/cms/posts');
         const posts = data.filter(item => item.name.endsWith('.md')).sort((a, b) => b.name.localeCompare(a.name));
         existingPostsCache = posts;
         list.innerHTML = '';
@@ -702,10 +664,12 @@
         return;
       }
       try {
-        await githubApi(`src/content/research/${name}`, 'DELETE', {
-          message: `content: delete ${name}`,
-          sha: post.sha,
+        await cmsApi('/api/cms/delete', 'POST', {
+          repo: getSettings().repo,
           branch: getSettings().branch,
+          path: `src/content/research/${name}`,
+          sha: post.sha,
+          message: `content: delete ${name}`,
         });
         loadExistingPosts();
       } catch (err) {
@@ -719,41 +683,26 @@
       link.href = `https://github.com/${repo}/actions`;
     }
 
-    async function changeAdminPassword() {
-      const current = document.getElementById('change-current').value;
-      const newPw = document.getElementById('change-new').value;
-      const confirmPw = document.getElementById('change-confirm').value;
-      const msg = document.getElementById('change-password-msg');
-      msg.className = '';
-      msg.textContent = '';
-
-      if (!current || !newPw || !confirmPw) {
-        msg.textContent = 'All fields are required.';
-        msg.className = 'error';
-        return;
+    async function signIn() {
+      const password = document.getElementById('password').value;
+      const errorEl = document.getElementById('login-error');
+      errorEl.textContent = '';
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text);
+        }
+        const { token } = await res.json();
+        sessionStorage.setItem(TOKEN_KEY, token);
+        showApp();
+      } catch (err) {
+        errorEl.textContent = 'Incorrect password or login error.';
       }
-      if (newPw !== confirmPw) {
-        msg.textContent = 'New passwords do not match.';
-        msg.className = 'error';
-        return;
-      }
-
-      const settings = getSettings();
-      const valid = await dcodeIO.bcrypt.compare(current, settings.hash);
-      if (!valid) {
-        msg.textContent = 'Current password is incorrect.';
-        msg.className = 'error';
-        return;
-      }
-
-      const hash = await dcodeIO.bcrypt.hash(newPw, 10);
-      saveSettings({ ...settings, hash });
-      document.getElementById('setting-hash').value = hash;
-      document.getElementById('change-current').value = '';
-      document.getElementById('change-new').value = '';
-      document.getElementById('change-confirm').value = '';
-      msg.textContent = 'Password updated successfully.';
-      msg.className = 'success';
     }
 
     document.getElementById('post-title').addEventListener('input', e => {
@@ -766,48 +715,14 @@
       e.target.dataset.edited = 'true';
     });
 
-    document.getElementById('login-btn').addEventListener('click', async () => {
-      const input = document.getElementById('password').value;
-      const settings = getSettings();
-      try {
-        const ok = await dcodeIO.bcrypt.compare(input, settings.hash);
-        if (ok) {
-          document.getElementById('login-error').textContent = '';
-          showApp();
-        } else {
-          document.getElementById('login-error').textContent = 'Incorrect password.';
-        }
-      } catch (e) {
-        document.getElementById('login-error').textContent = 'Error verifying password.';
-      }
-    });
+    document.getElementById('login-btn').addEventListener('click', signIn);
 
     document.getElementById('password').addEventListener('keydown', e => {
-      if (e.key === 'Enter') document.getElementById('login-btn').click();
-    });
-
-    document.getElementById('settings-link-btn').addEventListener('click', () => {
-      document.querySelector('.login-box').innerHTML = `
-        <h1>Settings</h1>
-        <p>Configure the admin panel.</p>
-        <label for="settings-password">Password</label>
-        <input type="password" id="settings-password" placeholder="Enter current password" />
-        <button class="btn" id="settings-unlock-btn" style="width:100%;margin-top:1rem;">Unlock Settings</button>
-        <p id="settings-unlock-error" class="error"></p>
-      `;
-      document.getElementById('settings-unlock-btn').addEventListener('click', async () => {
-        const input = document.getElementById('settings-password').value;
-        const ok = await dcodeIO.bcrypt.compare(input, getSettings().hash);
-        if (ok) {
-          showApp();
-          showPanel('settings');
-        } else {
-          document.getElementById('settings-unlock-error').textContent = 'Incorrect password.';
-        }
-      });
+      if (e.key === 'Enter') signIn();
     });
 
     document.getElementById('logout-btn').addEventListener('click', () => {
+      sessionStorage.removeItem(TOKEN_KEY);
       document.getElementById('password').value = '';
       showLogin();
     });
@@ -827,33 +742,20 @@
 
     function populateSettings() {
       const s = getSettings();
-      document.getElementById('setting-token').value = s.token;
       document.getElementById('setting-repo').value = s.repo;
       document.getElementById('setting-branch').value = s.branch;
-      document.getElementById('setting-hash').value = s.hash;
       updateActionsLink();
     }
 
     document.getElementById('save-settings-btn').addEventListener('click', () => {
       saveSettings({
-        token: document.getElementById('setting-token').value.trim(),
         repo: document.getElementById('setting-repo').value.trim() || 'emerilansel-jpg/whitfield-research',
         branch: document.getElementById('setting-branch').value.trim() || 'main',
-        hash: document.getElementById('setting-hash').value.trim() || DEFAULT_HASH,
       });
       updateActionsLink();
       const msg = document.getElementById('settings-msg');
       msg.textContent = 'Settings saved.';
       msg.className = 'success';
-    });
-
-    document.getElementById('gen-hash-btn').addEventListener('click', async () => {
-      const pw = document.getElementById('gen-password').value;
-      if (!pw) return;
-      const hash = await dcodeIO.bcrypt.hash(pw, 10);
-      const el = document.getElementById('gen-hash-result');
-      el.textContent = hash;
-      el.style.display = 'block';
     });
 
     document.getElementById('publish-btn').addEventListener('click', publishPost);
@@ -885,10 +787,11 @@
       btn.addEventListener('click', () => insertSchema(btn.dataset.schema));
     });
 
-    document.getElementById('change-password-btn').addEventListener('click', changeAdminPassword);
     document.getElementById('setting-repo').addEventListener('input', updateActionsLink);
 
     document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
+
+    if (getSettings().token) showApp();
   </script>
 </body>
 </html>
