@@ -9,7 +9,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       We publish corrections when supported by qualifying evidence. Please include the report URL, the specific claim, and the opposing evidence. Anonymous submissions are accepted, but contact details help us verify context.
     </p>
 
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:2.5rem;display:grid;gap:1.25rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:2rem;">
+    <form id="evidence-form" method="POST" action="#" style="margin-top:2.5rem;display:grid;gap:1.25rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:2rem;">
+      <div class="hp-field" aria-hidden="true">
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+      </div>
       <div>
         <label for="report_url" style="display:block;font-weight:600;margin-bottom:0.35rem;">Report URL</label>
         <input type="url" id="report_url" name="report_url" required placeholder="https://whitfieldresearch.com/research/..." style="width:100%;padding:0.75rem 1rem;border:1px solid var(--color-border);border-radius:var(--radius);font-family:var(--font-body);" />
@@ -33,6 +37,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         Alternatively, email <a href="mailto:corrections@whitfieldresearch.com">corrections@whitfieldresearch.com</a>.
       </p>
     </form>
+
+    <script>
+      (function() {
+        const form = document.getElementById('evidence-form');
+        if (!form) return;
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const honeypot = form.querySelector('input[name="website"]');
+          if (honeypot && honeypot.value) {
+            return;
+          }
+          const reportUrl = form.querySelector('input[name="report_url"]').value;
+          const claim = form.querySelector('textarea[name="claim"]').value;
+          const evidence = form.querySelector('textarea[name="evidence"]').value;
+          const email = form.querySelector('input[name="email"]').value;
+          const body = 'Report URL: ' + reportUrl + '\n\nClaim Being Disputed:\n' + claim + '\n\nOpposing Evidence:\n' + evidence + '\n\nSubmitted by: ' + (email || 'Anonymous') + '\n';
+          const subject = 'Evidence Submission' + (reportUrl ? ' — ' + reportUrl : '');
+          window.location.href = 'mailto:corrections@whitfieldresearch.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        });
+      })();
+    </script>
+
+    <style>
+      .hp-field {
+        position: absolute;
+        left: -5000px;
+        opacity: 0;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+      }
+    </style>
 
     <h2 style="margin-top:3rem;">What Happens Next</h2>
     <ol style="margin-top:1rem;padding-left:1.5rem;line-height:1.9;">

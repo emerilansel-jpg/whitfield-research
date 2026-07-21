@@ -3,9 +3,42 @@
 <div style="background:var(--color-primary);color:#fff;border-radius:var(--radius);padding:2.5rem;">
   <h2 style="color:#fff;">Research Briefing</h2>
   <p style="opacity:0.8;margin-top:0.5rem;">New reports, methodology notes, and correction updates. No spam. Unsubscribe anytime.</p>
-  <form action="https://buttondown.com/api/emails/embed-subscribe/whitfield-research" method="post" target="_blank" style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+  <form id="newsletter-form" action="#" method="post" style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+    <div class="hp-field" aria-hidden="true">
+      <label for="nl-website">Website</label>
+      <input type="text" id="nl-website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
     <input type="email" name="email" placeholder="you@company.com" required style="flex:1;min-width:220px;padding:0.75rem 1rem;border:none;border-radius:var(--radius);font-family:var(--font-body);" />
     <button type="submit" style="background:var(--color-accent);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:var(--radius);font-weight:600;cursor:pointer;font-family:var(--font-body);">Subscribe</button>
   </form>
   <p style="font-size:0.8rem;opacity:0.6;margin-top:1rem;margin-bottom:0;">We never sell or share your email. <a href="/editorial-policy" style="color:#fff;text-decoration:underline;">Read our privacy approach.</a></p>
+
+  <script>
+    (function() {
+      const form = document.getElementById('newsletter-form');
+      if (!form) return;
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const honeypot = form.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value) {
+          return;
+        }
+        const email = form.querySelector('input[name="email"]').value;
+        const subject = 'Subscribe to Whitfield Research Briefing';
+        const body = 'Please subscribe this email address to the Research Briefing:\n\n' + email + '\n';
+        window.location.href = 'mailto:research@whitfieldresearch.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      });
+    })();
+  </script>
+
+  <style>
+    .hp-field {
+      position: absolute;
+      left: -5000px;
+      opacity: 0;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+    }
+  </style>
 </div>

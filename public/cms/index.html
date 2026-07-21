@@ -686,15 +686,7 @@
         for (const post of posts) {
           const slug = post.name.replace(/\.md$/, '');
           const li = document.createElement('li');
-          li.innerHTML = `
-            <div>
-              <a href="/research/${escapeHtml(slug)}" target="_blank">${escapeHtml(post.name)}</a>
-              <span style="color:var(--muted);font-size:0.85rem;display:block;margin-top:0.15rem;">${escapeHtml(post.path)}</span>
-            </div>
-            <div class="actions">
-              <button class="btn btn-danger btn-sm" data-delete="${escapeHtml(post.name)}">Delete</button>
-            </div>
-          `;
+          li.innerHTML = '<div><a href="/research/' + escapeHtml(slug) + '" target="_blank">' + escapeHtml(post.name) + '</a><span style="color:var(--muted);font-size:0.85rem;display:block;margin-top:0.15rem;">' + escapeHtml(post.path) + '</span></div><div class="actions"><button class="btn btn-danger btn-sm" data-delete="' + escapeHtml(post.name) + '">Delete</button></div>';
           list.appendChild(li);
         }
       } catch (err) {
