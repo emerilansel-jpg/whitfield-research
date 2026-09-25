@@ -18,7 +18,7 @@ tags:
   - skin-barrier-repair
   - non-nano-zinc-oxide
   - hypoallergenic-skincare
-disclosure: No commercial relationship
+disclosure: Whitfield Research conducted this comparative market evaluation independently without financial compensation, sponsorships, advisory retainers, or affiliate commissions. All performance assessments and safety audits were derived from standardized benchmark criteria, peer-reviewed clinical studies, and verified third-party laboratory datasets for educational purposes, not individualized medical advice.
 limitations: Findings are based on regulatory filings, third-party laboratory assays, and published clinical safety literature through April 2026 without conducting concurrent head-to-head human repeat-insult patch tests (HRIPT) across all production lots. The results reflect comparative algorithmic modeling and do not constitute individualized medical advice.
 featured: false
 heroImage: "https://www.image2url.com/r2/default/images/1790244080894-eea1b986-844d-4ea1-829c-8d869b09c24b.png"
@@ -29,8 +29,7 @@ category: "Research"
 ---
 
 ### Disclosure & Disclaimer
-Whitfield Research conducted this comparative market evaluation independently. Whitfield Research accepts no financial compensation, sponsorship, advisory retainers, or affiliate commissions from any product manufacturer or distributor reviewed within this report. All performance assessments, safety audits, and benchmark scores were derived strictly through standardized evaluation criteria, peer-reviewed clinical literature, regulatory filing disclosures, and verified third-party laboratory panel datasets collected between March and April 2026. The findings herein are intended solely for educational, analytical, and consumer advisory purposes and do not constitute individualized medical advice.
-
+Whitfield Research conducted this comparative market evaluation independently. Whitfield Research accepts no financial compensation, sponsorship, advisory retainers, or affiliate commissions from any product manufacturer or distributor reviewed within this report. All performance assessments, safety audits, and benchmark scores were derived strictly through standardized evaluation criteria, peer-reviewed clinical literature, regulatory filing disclosures, and verified third-party laboratory panel datasets collected between March and April 2026. The findings herein are intended solely for educational, analytical, and consumer advisory purposes and do not constitute individualized medical adv
 ---
 
 ### Table of Contents
