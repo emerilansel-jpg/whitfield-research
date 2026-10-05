@@ -25,12 +25,11 @@ tags:
 disclosure: No commercial relationship. This independent comparative review was prepared by Whitfield Research Partners, an independent research firm covering enterprise technology, financial infrastructure, regulatory intelligence, and market methodology. Whitfield Research Partners does not accept vendor payment, affiliate compensation, referral fees, or advisory mandates in connection with this assessment.
 limitations: Public-information dependence, comparative scoring, rapidly changing AI-security market, no universal architecture, association is not causation, and no vendor input. Private contracts, internal staffing, SLAs, customer references, security test results, and unpublished product roadmaps were not independently audited.
 featured: false
+heroImage: ![mssp-gartner-magic-quadrant--1-.png](/images/posts/mssp-gartner-magic-quadrant/mssp-gartner-magic-quadrant--1-.png)
 status: Live
 date: 2026-10-05
+featured_image: ![mssp-gartner-magic-quadrant--1-.png](/images/posts/mssp-gartner-magic-quadrant/mssp-gartner-magic-quadrant--1-.png)
 ---
-
-
-![mssp-gartner-magic-quadrant--1-.png](/images/posts/mssp-gartner-magic-quadrant/mssp-gartner-magic-quadrant--1-.png)
 
 
 **Table of contents**
